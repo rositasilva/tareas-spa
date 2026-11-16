@@ -1,0 +1,174 @@
+/* ===== Colores que uso en toda la app ===== */
+:root {
+  --morado: #7c3aed;
+  --morado-osc: #5b21b6;
+  --rosa: #ec4899;
+  --fondo: #faf5ff;
+  --texto: #1f1530;
+  --borde: #d8c7f5;
+  --error: #b91c1c;
+}
+
+/* ===== Base ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+/* Enlace para saltar al contenido (solo se ve al usar el teclado) */
+.saltar { position: absolute; left: -999px; }
+.saltar:focus { left: 8px; top: 8px; background: #fff; padding: .5rem; z-index: 10; }
+
+/* Texto que solo leen los lectores de pantalla */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* El foco se tiene que ver bien al navegar con Tab */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--rosa);
+  outline-offset: 2px;
+}
+
+/* ===== Cabecera y menú ===== */
+.cabecera {
+  background: var(--morado-osc);
+  color: #fff;
+  padding: .75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.cabecera h1 { margin: 0; font-size: 1.3rem; }
+
+nav { display: flex; gap: 1rem; }
+nav a { color: #fff; padding: .4rem .2rem; }
+nav a.router-link-exact-active { border-bottom: 3px solid var(--rosa); font-weight: 700; }
+
+.usuario { display: flex; align-items: center; gap: .75rem; }
+
+.contenedor { max-width: 40rem; margin: 0 auto; padding: 1rem; }
+
+/* Aviso de que no hay internet */
+.banner {
+  margin: 0;
+  background: #fef3c7;
+  color: #78350f;
+  padding: .6rem 1rem;
+  text-align: center;
+}
+
+/* ===== Botones ===== */
+.btn {
+  font: inherit;
+  padding: .6rem 1rem;
+  min-height: 44px;            /* tamaño cómodo para tocar en el celular */
+  border: 2px solid var(--morado);
+  background: #fff;
+  color: var(--morado-osc);
+  border-radius: .5rem;
+  cursor: pointer;
+}
+.btn[aria-pressed="true"] { background: var(--morado); color: #fff; }
+.btn.primario { background: var(--morado); color: #fff; }
+.btn.peligro { border-color: var(--error); color: var(--error); }
+.btn.claro { background: transparent; color: #fff; border-color: #fff; min-height: 40px; padding: .3rem .8rem; }
+.btn.enlace { border: none; background: none; text-decoration: underline; margin-top: .75rem; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+
+/* ===== Lista de tareas ===== */
+.filtros { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+
+.lista { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: .6rem;
+  padding: .6rem .8rem;
+}
+.item.hecha strong { text-decoration: line-through; opacity: .65; }
+
+.texto { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.desc { margin: .25rem 0 0; font-size: .9rem; opacity: .8; }
+.acciones { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+
+/* ===== Formularios ===== */
+.form { display: grid; gap: .5rem; }
+
+.form input,
+.form textarea,
+.item select {
+  font: inherit;
+  padding: .6rem;
+  border: 2px solid var(--borde);
+  border-radius: .5rem;
+  background: #fff;
+}
+.item select { min-height: 44px; }
+.form textarea { resize: vertical; }
+.form input[aria-invalid="true"],
+.form textarea[aria-invalid="true"] { border-color: var(--error); }
+
+.error-campo { color: var(--error); min-height: 1.5rem; margin: 0; }
+
+/* ===== Mensajes de carga, vacío y error ===== */
+.estado {
+  padding: 1rem;
+  background: #fff;
+  border: 1px dashed var(--borde);
+  border-radius: .6rem;
+  text-align: center;
+}
+.estado.error { color: var(--error); border-color: var(--error); }
+
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 3px solid var(--borde);
+  border-top-color: var(--morado);
+  border-radius: 50%;
+  animation: giro 1s linear infinite;
+  vertical-align: middle;
+}
+@keyframes giro { to { transform: rotate(360deg); } }
+
+/* Mensajito que aparece abajo cuando se guarda algo */
+.aviso {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--texto);
+  color: #fff;
+  border-radius: .5rem;
+  padding: 0;
+  max-width: 90%;
+}
+.aviso:not(:empty) { padding: .7rem 1rem; }
+
+/* ===== Adaptación a pantallas pequeñas y accesibilidad ===== */
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; }
+}
+@media (max-width: 480px) {
+  .item { flex-direction: column; align-items: stretch; }
+}
